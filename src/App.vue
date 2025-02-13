@@ -11,6 +11,8 @@ const todos_asc = computed(() => todos.value.sort((a, b) => {
   return b.createdAt - a.createdAt;
 }));
 
+const addTodo = () => {} 
+
 watch(name, (newVal) => {
   localStorage.setItem('name', newVal);
 })
@@ -26,10 +28,19 @@ onMounted (() => {
 
     <section class="greeting">
       <h2 class="title">
-        Hi <input type="text" placeholder="name here" v-model="name"/>
+        Geef je naam: <input type="text" placeholder="name here" v-model="name"/>
+      
       </h2>
     </section>
     
+    <section class="create-todo">
+      <h3>Maak een takenlijst</h3>
+
+      <form @submit.prevent="addTodo">
+        <h4>Wat staat er op je takenlijst {{ name }} ?</h4>
+        <input type="text" placeholder="bv. boodschappen doen" v-model="input_content" />
+      </form>
+    </section>
   </main>
 
 </template>
