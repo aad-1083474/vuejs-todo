@@ -39,6 +39,35 @@ onMounted (() => {
       <form @submit.prevent="addTodo">
         <h4>Wat staat er op je takenlijst {{ name }} ?</h4>
         <input type="text" placeholder="bv. boodschappen doen" v-model="input_content" />
+        
+        <h4>Kies een categorie</h4>
+
+        <div class="options">
+          <label>
+            <input
+            type="radio" 
+            name="category"
+            value="business"
+            v-model="input_category" />
+
+            <span class="bubble business"></span>
+            <div>Werk gerelateerd</div>
+          </label>
+
+          <label>
+            <input
+            type="radio" 
+            name="category"
+            value="business"
+            v-model="input_category" />
+
+            <span class="bubble personal"></span>
+            <div>Persoonlijk</div>
+          </label>
+
+        </div>
+
+        <input type="submit" value="Toevoegen taak">
       </form>
     </section>
   </main>
