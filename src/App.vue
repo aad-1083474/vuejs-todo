@@ -25,7 +25,7 @@ onMounted (() => {
 <template>
 
   <main class="app">
-
+    <img src="./assets/quasar.svg" alt="">
     <section class="greeting">
       <h2 class="title">
         Geef je naam: <input type="text" placeholder="name here" v-model="name"/>
