@@ -11,7 +11,26 @@ const todos_asc = computed(() => todos.value.sort((a, b) => {
   return b.createdAt - a.createdAt;
 }));
 
-const addTodo = () => {} 
+const addTodo = () => {
+  if (input_content.value.trim() === '' || input_category.value === null) {
+    return;
+  }
+
+  todos.value.push({
+    content: input_content.value,
+    category: input_category.value,
+    done: false,
+    createdAt: new Date().getTime()
+  })
+} 
+
+const removeTodo = todo => {
+  todos.value = todos.value.filter(t => t !== todo);
+}
+
+watch(todos, (newVal) => {
+  localStorage.setItem('todos', JSON.stringify(newVal));
+}, { deep: true})
 
 watch(name, (newVal) => {
   localStorage.setItem('name', newVal);
@@ -19,12 +38,13 @@ watch(name, (newVal) => {
 
 onMounted (() => {
   name.value = localStorage.getItem('name') || '';
+  todos.value = JSON.parse(localStorage.getItem('todos')) || []
 })
 </script>
 
 <template>
-
   <main class="app">
+
     <img src="./assets/quasar.svg" alt="">
     <section class="greeting">
       <h2 class="title">
@@ -58,7 +78,7 @@ onMounted (() => {
             <input
             type="radio" 
             name="category"
-            value="business"
+            value="personal"
             v-model="input_category" />
 
             <span class="bubble personal"></span>
@@ -70,8 +90,35 @@ onMounted (() => {
         <input type="submit" value="Toevoegen taak">
       </form>
     </section>
-  </main>
 
+    <section class="todo-list">
+      <h3>TODO LIST</h3>
+      <div class="list">
+
+        <div v-for="todo in todos_asc" :class="`todo-item ${todo.done && 'done'}`">
+
+          <label>
+            <input type="checkbox" v-model="todo.done" />
+            <span :class="`bubble ${todo.category}`"></span>
+          </label>
+
+          <div class="todo-content">
+            <input type="text" v-model="todo.content"> 
+          </div>
+
+          <div class="actions">
+            <button class="delete" @click="removeTodo(todo)">Verwijderen</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </template>
 
-
+<style>
+img {
+  width: 1700px;
+  height: 400px;
+}
+</style>
