@@ -1,6 +1,7 @@
 # This is just a basic todo app made with Vue & Vite (in Dutch!) 
 
-To start the app copy the repo and follow these steps
+Manual 
 
-- npm instal
+- clone repository 
+- npm install 
 - npm run dev
